@@ -9,16 +9,28 @@ const server = http.createServer(app);
 
 const allowedOrigins = [
   "http://localhost:5173",               // local dev
-  "https://chat-app-frontend-eight-rouge.vercel.app"     // deployed frontend
+  "https://chat-app-frontend-eight-rouge.vercel.app"     // deployed frontend 
 ];
 
 
 const io = new Server(server, {
   cors: {
-    origin: allowedOrigins,
-    methods: ["GET", "PUT"],
-  },
+    origin: [
+      "http://localhost:5173",
+      "https://chat-app-frontend-eight-rouge.vercel.app"
+    ],
+    methods: ["GET", "POST"],
+    credentials: true
+  }
 });
+
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://chat-app-frontend-eight-rouge.vercel.app"
+  ],
+  credentials: true
+}));
 
 io.on("connection",(socket)=>{console.log(socket.id)
 
@@ -38,7 +50,7 @@ io.on("connection",(socket)=>{console.log(socket.id)
 
 
 
-app.use(cors());
+
 
 
 server.listen(1000,()=>console.log("Server is running on port 1000"));
