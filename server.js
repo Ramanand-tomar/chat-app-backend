@@ -23,6 +23,9 @@ const io = new Server(server, {
     credentials: true
   }
 });
+app.get("/", (req, res) => {
+  res.send("Socket.IO Server is Live");
+});
 
 app.use(cors({
   origin: [
